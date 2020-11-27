@@ -1,0 +1,4 @@
+problem中 border的意思是有连接，即border town field则town和field是有路径的，能从town到field。
+这个文件的目的就是要npc从town到castle。
+domain中有几个类型，move的意思是player从l1到l2，前提条件是角色在l1，且l1l2有连接，也就是border。
+并且没有守卫，这里的Init没有提到guarded，那么默认就是false了。

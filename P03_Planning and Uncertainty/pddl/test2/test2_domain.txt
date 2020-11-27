@@ -1,0 +1,40 @@
+(define (domain magic-world)
+   (:requirements :strips :typing)
+   (:types player location monster element chest)
+
+   (:action move
+      :parameters (?p - player ?l1 - location ?l2 - location)
+      :precondition ( and (at ?p ?l1) (border ?l1 ?l2) (not_guarded ?l2) )
+      :effect ( and (at ?p ?l2) (not (at ?p ?l1)) )
+   )
+
+   (:action attack
+      :parameters (?p - player ?m - monster ?l1 - location ?l2 - location)
+      :precondition ( and (at ?p ?l1) (at ?m ?l2) (border ?l1 ?l2) (guarded ?l2) )
+      :effect ( and (not (at ?m ?l2)) (not (guarded ?l2)) (not_guarded ?l2) )
+   )
+
+   (:action open
+      :parameters (?p - player ?c - chest ?l1 - location)
+      :precondition ( and (at ?p ?l1) (at ?c ?l1) (not_open ?c) )
+      :effect ( and (open ?c) (not (not_open ?c)) )
+   )
+
+   (:action collect_fire
+      :parameters (?p - player ?c - chest ?l1 - location ?e - element)
+      :precondition ( and (at ?p ?l1) (at ?c ?l1) (open ?c) (fire ?e) (in ?e ?c) (not_empty ?c) )
+      :effect ( and (empty ?c) (has_fire ?p) (not (not_empty ?c)) )
+   )
+
+   (:action collect_earth
+      :parameters (?p - player ?c - chest ?l1 - location ?e - element)
+      :precondition ( and (at ?p ?l1) (at ?c ?l1) (open ?c) (earth ?e) (in ?e ?c) (not_empty ?c) )
+      :effect ( and (empty ?c) (has_earth ?p) (not (not_empty ?c)) )
+   )
+
+   (:action build-fireball
+      :parameters (?p - player)
+      :precondition ( and (has_fire ?p) (has_earth ?p) )
+      :effect ( and (has_fireball ?p) (not (has_fire ?p)) (not (has_earth ?p)) )
+   )
+)

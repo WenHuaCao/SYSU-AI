@@ -1,0 +1,10 @@
+(define (domain magic-world)
+   (:requirements :strips :typing)
+   (:types player location monster element chest)
+
+   (:action move
+      :parameters (?p - player ?l1 - location ?l2 - location)
+      :precondition ( and (at ?p ?l1) (border ?l1 ?l2) (not_guarded ?l2) )
+      :effect ( and (at ?p ?l2) (not (at ?p ?l1)) )
+   )
+)
